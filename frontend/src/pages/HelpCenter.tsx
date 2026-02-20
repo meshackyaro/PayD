@@ -89,7 +89,7 @@ export default function HelpCenter() {
             placeholder="Search documentation..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm transition"
+            className="w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-(--accent) text-sm transition"
           />
         </div>
 

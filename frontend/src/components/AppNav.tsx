@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Code, User, Wallet } from "lucide-react";
 import { Avatar } from "./Avatar";
 
@@ -58,6 +58,9 @@ const AppNav: React.FC = () => {
                 debugger
             </NavLink>
 
+            <Link to="/help" className="text-blue-500 text-xs underline ml-2">
+                Need help?
+            </Link>
 
             <div className="p-1 bg-gray-50 rounded-lg flex items-center gap-2">
                 <Avatar
