@@ -67,10 +67,10 @@ const AppNav: React.FC = () => {
                     size="sm"
                 />
                 <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-800 truncate">
+                    <p className="text-[10px] font-semibold text-gray-800 truncate">
                         {currentUser.name}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">{currentUser.email}</p>
+                    <p className="text-[10px] text-gray-500 truncate">{currentUser.email}</p>
                 </div>
             </div>
 

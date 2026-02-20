@@ -47,7 +47,7 @@ export const Avatar: React.FC<AvatarProps> = ({
           e.currentTarget.style.display = "none";
         }}
       />
-      <span className="bg-gradient-to-br from-blue-400 to-blue-600 text-white font-semibold hidden">
+      <span className="bg-linear-to-br from-blue-400 to-blue-600 text-white font-semibold hidden">
         {initials}
       </span>
     </div>
