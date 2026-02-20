@@ -191,6 +191,24 @@ npm run build
 npm start
 ```
 
+Run tests:
+
+```bash
+npm test
+```
+
+Run tests with coverage:
+
+```bash
+npm test -- --coverage
+```
+
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
 Lint code:
 
 ```bash
@@ -201,4 +219,36 @@ Format code:
 
 ```bash
 npm run format
+```
+
+## Testing
+
+This project includes comprehensive unit and integration tests covering:
+
+- Full-text search functionality
+- Multi-criteria filtering
+- Pagination logic
+- Error handling
+- Edge cases
+
+See [TESTING.md](TESTING.md) for detailed testing documentation.
+
+### Test Coverage
+
+- 60+ test cases
+- Unit tests for search service logic
+- Integration tests for API endpoints
+- Mocked database for fast, reliable tests
+
+Run tests:
+
+```bash
+npm test
+```
+
+View coverage report:
+
+```bash
+npm test -- --coverage
+open coverage/lcov-report/index.html
 ```
