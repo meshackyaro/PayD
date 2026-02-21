@@ -1,5 +1,9 @@
 import { pool } from '../config/database';
-import { CreateEmployeeInput, UpdateEmployeeInput, EmployeeQueryInput } from '../schemas/employeeSchema';
+import {
+  CreateEmployeeInput,
+  UpdateEmployeeInput,
+  EmployeeQueryInput,
+} from '../schemas/employeeSchema';
 
 export class EmployeeService {
   async create(data: CreateEmployeeInput) {
@@ -80,9 +84,9 @@ export class EmployeeService {
     values.push(limit, offset);
 
     const result = await pool.query(query, values);
-    
+
     const total = result.rows.length > 0 ? parseInt(result.rows[0].total_count) : 0;
-    const employees = result.rows.map(row => {
+    const employees = result.rows.map((row) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { total_count, ...employee } = row;
       return employee;
@@ -95,7 +99,7 @@ export class EmployeeService {
         page,
         limit,
         totalPages: Math.ceil(total / limit),
-      }
+      },
     };
   }
 

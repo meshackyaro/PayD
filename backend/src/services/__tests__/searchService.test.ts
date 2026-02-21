@@ -70,7 +70,7 @@ describe('SearchService', () => {
       });
 
       // Verify query was called with correct parameters
-      expect((mockPool.query as jest.Mock)).toHaveBeenCalledTimes(2);
+      expect(mockPool.query as jest.Mock).toHaveBeenCalledTimes(2);
       const dataQueryCall = (mockPool.query as jest.Mock).mock.calls[1];
       expect(dataQueryCall[0]).toContain('search_vector');
       expect(dataQueryCall[0]).toContain('plainto_tsquery');
@@ -463,7 +463,7 @@ describe('SearchService', () => {
         limit: 20,
       });
 
-      expect((mockPool.query as jest.Mock)).toHaveBeenCalledTimes(2);
+      expect(mockPool.query as jest.Mock).toHaveBeenCalledTimes(2);
       const dataQueryCall = (mockPool.query as jest.Mock).mock.calls[1];
       expect(dataQueryCall[1]).toContain("O'Brien");
     });

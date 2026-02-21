@@ -6,7 +6,7 @@ jest.mock('../../config/env', () => ({
   config: {
     DATABASE_URL: 'postgres://mock',
     PORT: 3000,
-  }
+  },
 }));
 
 import employeeRoutes from '../../routes/employeeRoutes';
@@ -43,16 +43,15 @@ describe('EmployeeController', () => {
         .expect(201);
 
       expect(response.body).toEqual(mockCreatedEmployee);
-      expect(employeeService.create).toHaveBeenCalledWith(expect.objectContaining(validEmployeeData));
+      expect(employeeService.create).toHaveBeenCalledWith(
+        expect.objectContaining(validEmployeeData)
+      );
     });
 
     it('should return 400 for invalid data', async () => {
       const invalidData = { first_name: 'John' }; // Missing required fields
 
-      const response = await request(app)
-        .post('/api/employees')
-        .send(invalidData)
-        .expect(400);
+      const response = await request(app).post('/api/employees').send(invalidData).expect(400);
 
       expect(response.body).toHaveProperty('error', 'Validation Error');
       expect(employeeService.create).not.toHaveBeenCalled();
@@ -67,15 +66,15 @@ describe('EmployeeController', () => {
       };
       (employeeService.findAll as jest.Mock).mockResolvedValue(mockResult);
 
-      const response = await request(app)
-        .get('/api/employees?page=1&limit=10')
-        .expect(200);
+      const response = await request(app).get('/api/employees?page=1&limit=10').expect(200);
 
       expect(response.body).toEqual(mockResult);
-      expect(employeeService.findAll).toHaveBeenCalledWith(expect.objectContaining({
-        page: 1,
-        limit: 10,
-      }));
+      expect(employeeService.findAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          page: 1,
+          limit: 10,
+        })
+      );
     });
   });
 
@@ -84,9 +83,7 @@ describe('EmployeeController', () => {
       const mockEmployee = { id: 1, first_name: 'John' };
       (employeeService.findById as jest.Mock).mockResolvedValue(mockEmployee);
 
-      const response = await request(app)
-        .get('/api/employees/1')
-        .expect(200);
+      const response = await request(app).get('/api/employees/1').expect(200);
 
       expect(response.body).toEqual(mockEmployee);
       expect(employeeService.findById).toHaveBeenCalledWith(1);
@@ -95,9 +92,7 @@ describe('EmployeeController', () => {
     it('should return 404 if employee not found', async () => {
       (employeeService.findById as jest.Mock).mockResolvedValue(null);
 
-      await request(app)
-        .get('/api/employees/999')
-        .expect(404);
+      await request(app).get('/api/employees/999').expect(404);
     });
   });
 
@@ -107,10 +102,7 @@ describe('EmployeeController', () => {
       const mockUpdatedEmployee = { id: 1, first_name: 'Johnny' };
       (employeeService.update as jest.Mock).mockResolvedValue(mockUpdatedEmployee);
 
-      const response = await request(app)
-        .patch('/api/employees/1')
-        .send(updateData)
-        .expect(200);
+      const response = await request(app).patch('/api/employees/1').send(updateData).expect(200);
 
       expect(response.body).toEqual(mockUpdatedEmployee);
       expect(employeeService.update).toHaveBeenCalledWith(1, expect.objectContaining(updateData));
@@ -121,9 +113,7 @@ describe('EmployeeController', () => {
     it('should delete employee successfully', async () => {
       (employeeService.delete as jest.Mock).mockResolvedValue({ id: 1 });
 
-      await request(app)
-        .delete('/api/employees/1')
-        .expect(204);
+      await request(app).delete('/api/employees/1').expect(204);
 
       expect(employeeService.delete).toHaveBeenCalledWith(1);
     });
@@ -131,9 +121,7 @@ describe('EmployeeController', () => {
     it('should return 404 if employee not found', async () => {
       (employeeService.delete as jest.Mock).mockResolvedValue(null);
 
-      await request(app)
-        .delete('/api/employees/999')
-        .expect(404);
+      await request(app).delete('/api/employees/999').expect(404);
     });
   });
 });

@@ -2,9 +2,9 @@ import { z } from 'zod';
 
 export const createEmployeeSchema = z.object({
   organization_id: z.number().int().positive(),
-  first_name: z.string().min(1, "First name is required").max(100),
-  last_name: z.string().min(1, "Last name is required").max(100),
-  email: z.string().email("Invalid email address"),
+  first_name: z.string().min(1, 'First name is required').max(100),
+  last_name: z.string().min(1, 'Last name is required').max(100),
+  email: z.string().email('Invalid email address'),
   wallet_address: z.string().max(56).optional(),
   position: z.string().max(100).optional(),
   department: z.string().max(100).optional(),
