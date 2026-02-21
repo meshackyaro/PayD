@@ -1,5 +1,14 @@
 import request from 'supertest';
 import express from 'express';
+
+// Mock env config before importing routes
+jest.mock('../../config/env', () => ({
+  config: {
+    DATABASE_URL: 'postgres://mock',
+    PORT: 3000,
+  }
+}));
+
 import searchRoutes from '../../routes/searchRoutes';
 import searchService from '../../services/searchService';
 
@@ -404,7 +413,7 @@ describe('SearchController', () => {
     });
 
     it('should handle missing organization ID', async () => {
-      const response = await request(app)
+      await request(app)
         .get('/api/search/organizations//employees')
         .expect(404);
     });
