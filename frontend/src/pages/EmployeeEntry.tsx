@@ -10,6 +10,8 @@ import {
   Input,
   Select,
   Alert,
+  Heading,
+  Text,
 } from "@stellar/design-system";
 
 interface EmployeeFormState {
@@ -135,7 +137,7 @@ export default function EmployeeEntry() {
               >
                 <Icon.ArrowLeft />
               </button>
-              <h1 style={{ fontWeight: "bold", fontSize: "1.5rem", margin: 0 }}>Add New Employee</h1>
+              <Heading as="h1" size="lg" weight="bold">Add New Employee</Heading>
             </div>
             <AutosaveIndicator saving={saving} lastSaved={lastSaved} />
           </div>
@@ -187,8 +189,8 @@ export default function EmployeeEntry() {
         <div className="flex-1 flex flex-col items-center justify-start p-12 max-w-6xl mx-auto w-full">
             <div className="w-full mb-12 flex items-end justify-between border-b border-hi pb-8">
                 <div>
-                    <h1 className="text-4xl font-black mb-2 tracking-tight">Workforce <span className="text-accent">Directory</span></h1>
-                    <p className="text-muted font-mono text-sm tracking-wider uppercase">Employee roster and compliance</p>
+                    <Heading as="h1" size="lg" weight="bold" addlClassName="mb-2 tracking-tight">Workforce <span className="text-accent">Directory</span></Heading>
+                    <Text as="p" size="sm" weight="regular" addlClassName="text-muted font-mono tracking-wider uppercase">Employee roster and compliance</Text>
                 </div>
                 <button 
                   id="tour-add-employee" 

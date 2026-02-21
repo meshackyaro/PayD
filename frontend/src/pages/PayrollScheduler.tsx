@@ -8,7 +8,20 @@ import {
   Input,
   Select,
   Alert,
+  Heading,
+  Text,
 } from "@stellar/design-system";
+
+const formatDate = (dateString: string) => {
+  if (!dateString) return "N/A";
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString;
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
 
 interface PendingClaim {
   id: string;
@@ -141,9 +154,9 @@ export default function PayrollScheduler() {
             marginBottom: "1.5rem",
           }}
         >
-          <h1 style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+          <Heading as="h1" size="lg" weight="bold">
             Payroll Scheduler
-          </h1>
+          </Heading>
           <AutosaveIndicator saving={saving} lastSaved={lastSaved} />
         </div>
 
@@ -198,11 +211,11 @@ export default function PayrollScheduler() {
             <Input
               id="startDate"
               fieldSize="md"
-              label="Start Date (YYYY-MM-DD)"
+              label="Start Date"
               name="startDate"
+              type="date"
               value={formData.startDate}
               onChange={handleChange}
-              placeholder="2024-01-01"
             />
 
             <Button id="tour-init-payroll" type="submit" variant="primary" size="md">
@@ -282,23 +295,27 @@ export default function PayrollScheduler() {
                       gap: "0.25rem",
                     }}
                   >
-                    <p style={{ margin: 0 }}>
+                    <Text as="p" size="sm" weight="regular" style={{ margin: 0 }}>
                       Amount: {claim.amount} USDC
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      Scheduled: {claim.dateScheduled}
-                    </p>
-                    <p
+                    </Text>
+                    <Text as="p" size="sm" weight="regular" style={{ margin: 0 }}>
+                      Scheduled: {formatDate(claim.dateScheduled)}
+                    </Text>
+                    <Text
+                      as="p"
+                      size="xs"
+                      weight="regular"
                       style={{
                         margin: 0,
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
+                        color: "var(--color-gray-500)",
                       }}
                       title={claim.claimantPublicKey}
                     >
                       To: {claim.claimantPublicKey}
-                    </p>
+                    </Text>
                   </div>
                 </li>
               ))}
