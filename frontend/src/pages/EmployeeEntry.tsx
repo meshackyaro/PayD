@@ -12,6 +12,7 @@ import { AutosaveIndicator } from "../components/AutosaveIndicator";
 import { useAutosave } from "../hooks/useAutosave";
 import { generateWallet } from "../services/stellar";
 import { useTranslation } from "react-i18next";
+import { useNotification } from "../providers/NotificationProvider";
 
 interface EmployeeFormState {
   fullName: string;
@@ -83,6 +84,7 @@ export default function EmployeeEntry() {
     message: string;
     secretKey?: string;
   } | null>(null);
+  const { notifySuccess } = useNotification();
   const { saving, lastSaved, loadSavedData } = useAutosave<EmployeeFormState>(
     "employee-entry-draft",
     formData,
@@ -125,6 +127,11 @@ export default function EmployeeEntry() {
     };
 
     console.log("Form submitted, employee saved:", submitData);
+
+    notifySuccess(
+      `${submitData.fullName} added successfully!`,
+      generatedWallet ? "A new Stellar wallet was generated for this employee." : undefined,
+    );
 
     setNotification({
       message: `Employee ${submitData.fullName} added successfully! ${
