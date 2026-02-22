@@ -102,32 +102,32 @@ function App() {
           }
         />
         <Route
-            path="/settings"
-                    element={
-                        <ErrorBoundary fallback={<ErrorFallback />}>
-                            <Settings />
-                        </ErrorBoundary>
-                    }
-                />
-                <Route
-                    path="/help"
-                    element={
-                        <ErrorBoundary fallback={<ErrorFallback />}>
-                            <HelpCenter />
-                        </ErrorBoundary>
-                    }
-                />
-                <Route
-                    path="/cross-asset-payment"
-                    element={
-                        <ErrorBoundary fallback={<ErrorFallback />}>
-                            <CrossAssetPayment />
-                        </ErrorBoundary>
-                    }
-                />
-            </Route>
-        </Routes>
-    );
+          path="/settings"
+          element={
+            <ErrorBoundary Fallback={ErrorFallback}>
+              <Settings />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/help"
+          element={
+            <ErrorBoundary Fallback={ErrorFallback}>
+              <HelpCenter />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/cross-asset-payment"
+          element={
+            <ErrorBoundary Fallback={ErrorFallback}>
+              <CrossAssetPayment />
+            </ErrorBoundary>
+          }
+        />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
