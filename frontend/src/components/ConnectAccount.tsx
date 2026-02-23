@@ -1,5 +1,5 @@
 import React from "react";
-import { useWallet } from "../providers/WalletProvider";
+import { useWallet } from "../hooks/useWallet";
 import { useTranslation } from "react-i18next";
 
 const ConnectAccount: React.FC = () => {
