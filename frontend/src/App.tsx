@@ -1,17 +1,18 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Debugger from "./pages/Debugger";
-import PayrollScheduler from "./pages/PayrollScheduler";
-import EmployeeEntry from "./pages/EmployeeEntry";
-import AppLayout from "./components/AppLayout";
-import HelpCenter from "./pages/HelpCenter";
-import ErrorBoundary from "./components/ErrorBoundary";
-import ErrorFallback from "./components/ErrorFallback";
-import Settings from "./pages/Settings";
-import CustomReportBuilder from "./pages/CustomReportBuilder";
-import CrossAssetPayment from "./pages/CrossAssetPayment";
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Debugger from './pages/Debugger';
+import PayrollScheduler from './pages/PayrollScheduler';
+import EmployeeEntry from './pages/EmployeeEntry';
+import AppLayout from './components/AppLayout';
+import HelpCenter from './pages/HelpCenter';
+import ErrorBoundary from './components/ErrorBoundary';
+import ErrorFallback from './components/ErrorFallback';
+import Settings from './pages/Settings';
+import CustomReportBuilder from './pages/CustomReportBuilder';
+import CrossAssetPayment from './pages/CrossAssetPayment';
+import TransactionHistory from './pages/TransactionHistory';
 import EmployeePortal from "./pages/EmployeePortal";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 function App() {
   const { t } = useTranslation();
@@ -25,8 +26,8 @@ function App() {
             <ErrorBoundary
               fallback={
                 <ErrorFallback
-                  title={t("errorFallback.homeTitle")}
-                  description={t("errorFallback.homeDescription")}
+                  title={t('errorFallback.homeTitle')}
+                  description={t('errorFallback.homeDescription')}
                 />
               }
             >
@@ -40,8 +41,8 @@ function App() {
             <ErrorBoundary
               fallback={
                 <ErrorFallback
-                  title={t("errorFallback.payrollTitle")}
-                  description={t("errorFallback.payrollDescription")}
+                  title={t('errorFallback.payrollTitle')}
+                  description={t('errorFallback.payrollDescription')}
                 />
               }
             >
@@ -55,8 +56,8 @@ function App() {
             <ErrorBoundary
               fallback={
                 <ErrorFallback
-                  title={t("errorFallback.employeesTitle")}
-                  description={t("errorFallback.employeesDescription")}
+                  title={t('errorFallback.employeesTitle')}
+                  description={t('errorFallback.employeesDescription')}
                 />
               }
             >
@@ -93,8 +94,8 @@ function App() {
             <ErrorBoundary
               fallback={
                 <ErrorFallback
-                  title={t("errorFallback.debuggerTitle")}
-                  description={t("errorFallback.debuggerDescription")}
+                  title={t('errorFallback.debuggerTitle')}
+                  description={t('errorFallback.debuggerDescription')}
                 />
               }
             >
@@ -108,8 +109,8 @@ function App() {
             <ErrorBoundary
               fallback={
                 <ErrorFallback
-                  title={t("errorFallback.debuggerTitle")}
-                  description={t("errorFallback.debuggerDescription")}
+                  title={t('errorFallback.debuggerTitle')}
+                  description={t('errorFallback.debuggerDescription')}
                 />
               }
             >
@@ -120,7 +121,7 @@ function App() {
         <Route
           path="/settings"
           element={
-            <ErrorBoundary fallback={<ErrorFallback />}>
+            <ErrorBoundary fallback={<ErrorFallback onReset={() => {}} />}>
               <Settings />
             </ErrorBoundary>
           }
@@ -128,7 +129,7 @@ function App() {
         <Route
           path="/help"
           element={
-            <ErrorBoundary fallback={<ErrorFallback />}>
+            <ErrorBoundary fallback={<ErrorFallback onReset={() => {}} />}>
               <HelpCenter />
             </ErrorBoundary>
           }
@@ -136,8 +137,16 @@ function App() {
         <Route
           path="/cross-asset-payment"
           element={
-            <ErrorBoundary fallback={<ErrorFallback />}>
+            <ErrorBoundary fallback={<ErrorFallback onReset={() => {}} />}>
               <CrossAssetPayment />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/transactions"
+          element={
+            <ErrorBoundary fallback={<ErrorFallback onReset={() => {}} />}>
+              <TransactionHistory />
             </ErrorBoundary>
           }
         />
