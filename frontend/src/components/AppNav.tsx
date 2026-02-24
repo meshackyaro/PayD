@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Code, User, Wallet, FileText, Globe, Activity } from 'lucide-react';
+import { Code, User, Wallet, FileText, Globe, Activity, ShieldAlert } from 'lucide-react';
 import { Avatar } from './Avatar';
 
 const AppNav: React.FC = () => {
@@ -16,10 +16,9 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/payroll"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
-            isActive
-              ? 'text-(--accent) bg-white/5'
-              : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
+            ? 'text-(--accent) bg-white/5'
+            : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -32,10 +31,9 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/employee"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
-            isActive
-              ? 'text-(--accent) bg-white/5'
-              : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
+            ? 'text-(--accent) bg-white/5'
+            : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -48,10 +46,9 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/reports"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
-            isActive
-              ? 'text-(--accent) bg-white/5'
-              : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
+            ? 'text-(--accent) bg-white/5'
+            : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -64,10 +61,9 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/cross-asset-payment"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
-            isActive
-              ? 'text-(--accent) bg-white/5'
-              : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
+            ? 'text-(--accent) bg-white/5'
+            : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -80,10 +76,9 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/transactions"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
-            isActive
-              ? 'text-(--accent) bg-white/5'
-              : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
+            ? 'text-(--accent) bg-white/5'
+            : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -96,12 +91,24 @@ const AppNav: React.FC = () => {
       <div className="w-px h-5 bg-(--border-hi) mx-2" />
 
       <NavLink
+        to="/admin"
+        className={({ isActive }) =>
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
+            ? 'text-red-500 bg-red-500/10'
+            : 'text-red-400 hover:bg-red-500/20 hover:text-red-500'
+          }`
+        }
+      >
+        <ShieldAlert className="w-4 h-4" />
+        Admin
+      </NavLink>
+
+      <NavLink
         to="/debug"
         className={({ isActive }) =>
-          `flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-mono tracking-wide border transition ${
-            isActive
-              ? 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)]'
-              : 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)] hover:bg-[rgba(124,111,247,0.12)]'
+          `flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-mono tracking-wide border transition ${isActive
+            ? 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)]'
+            : 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)] hover:bg-[rgba(124,111,247,0.12)]'
           }`
         }
       >

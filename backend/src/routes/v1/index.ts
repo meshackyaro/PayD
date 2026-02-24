@@ -16,6 +16,7 @@ import payrollRoutes from '../payroll.routes';
 import exportRoutes from '../exportRoutes';
 import taxRoutes from '../taxRoutes';
 import rateLimitRoutes from '../rateLimitRoutes';
+import freezeRoutes from '../freezeRoutes';
 
 const router = Router();
 
@@ -34,5 +35,6 @@ router.use('/trustline', dataRateLimit(), trustlineRoutes);
 router.use('/exports', dataRateLimit(), exportRoutes);
 router.use('/taxes', dataRateLimit(), taxRoutes);
 router.use('/rate-limit', apiRateLimit(), rateLimitRoutes);
+router.use('/freeze', apiRateLimit(), freezeRoutes);
 
 export default router;
