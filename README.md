@@ -188,4 +188,4 @@ bash
 npm run build
 Run tests:
 bash
-npm run test
+npm run test.
