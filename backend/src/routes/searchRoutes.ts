@@ -6,9 +6,6 @@ import { requireTenantContext } from '../middleware/tenantContext';
 
 const router = Router();
 
-router.use(authenticateJWT);
-router.use(isolateOrganization);
-
 /**
  * @route GET /api/search/organizations/:organizationId/employees
  * @desc Search and filter employees
