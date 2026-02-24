@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Avatar } from './Avatar';
 import { Icon } from '@stellar/design-system';
 import { CSVUploader } from './CSVUploader';
+import type { CSVRow } from './CSVUploader';
 
 interface Employee {
   id: string;
@@ -27,14 +28,14 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({
   const [csvData, setCsvData] = useState<Employee[]>([]);
   const [showCSVUploader, setShowCSVUploader] = useState(false);
 
-  const handleDataParsed = (data: any[]) => {
+  const handleDataParsed = (data: CSVRow[]) => {
     const newEmployees = data.map((row) => ({
       id: String(Date.now() + Math.random()),
-      name: row.name,
-      email: row.email,
-      wallet: row.wallet,
-      position: row.position,
-      status: row.status || 'Active',
+      name: row.data.name,
+      email: row.data.email,
+      wallet: row.data.wallet,
+      position: row.data.position,
+      status: (row.data.status as 'Active' | 'Inactive') || 'Active',
     }));
     setCsvData(newEmployees);
   };
@@ -137,6 +138,7 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({
               requiredColumns={['name', 'email', 'wallet', 'position', 'status']}
               onDataParsed={handleDataParsed}
             />
+
             <div className="flex gap-2 justify-center mt-4">
               <button
                 onClick={handleAddEmployees}
