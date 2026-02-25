@@ -42,20 +42,24 @@ import { pool } from '../../config/database';
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeMockServer(overrides: Partial<{
-  loadAccount: jest.Mock;
-  submitTransaction: jest.Mock;
-  records: { account_id: string }[];
-}> = {}) {
+function makeMockServer(
+  overrides: Partial<{
+    loadAccount: jest.Mock;
+    submitTransaction: jest.Mock;
+    records: { account_id: string }[];
+  }> = {}
+) {
   const records = overrides.records ?? [];
   return {
-    loadAccount: overrides.loadAccount ?? jest.fn().mockResolvedValue({
-      accountId: () => 'G_ISSUER',
-      sequenceNumber: () => '1000',
-      incrementSequenceNumber: jest.fn(),
-    }),
-    submitTransaction: overrides.submitTransaction ??
-      jest.fn().mockResolvedValue({ hash: 'mock-tx-hash' }),
+    loadAccount:
+      overrides.loadAccount ??
+      jest.fn().mockResolvedValue({
+        accountId: () => 'G_ISSUER',
+        sequenceNumber: () => '1000',
+        incrementSequenceNumber: jest.fn(),
+      }),
+    submitTransaction:
+      overrides.submitTransaction ?? jest.fn().mockResolvedValue({ hash: 'mock-tx-hash' }),
     accounts: jest.fn().mockReturnValue({
       forAsset: jest.fn().mockReturnValue({
         limit: jest.fn().mockReturnValue({
@@ -95,7 +99,7 @@ describe('FreezeService', () => {
         targetKeypair.publicKey(),
         'ORGUSD',
         'freeze',
-        'Compliance violation',
+        'Compliance violation'
       );
 
       expect(mockServer.loadAccount).toHaveBeenCalledWith(issuerKeypair.publicKey());
@@ -114,7 +118,7 @@ describe('FreezeService', () => {
           'mock-tx-hash',
           issuerKeypair.publicKey(),
           'Compliance violation',
-        ]),
+        ])
       );
 
       expect(result).toEqual({
@@ -132,7 +136,7 @@ describe('FreezeService', () => {
         issuerKeypair,
         targetKeypair.publicKey(),
         'ORGUSD',
-        'unfreeze',
+        'unfreeze'
       );
 
       expect(result.action).toBe('unfreeze');
@@ -148,8 +152,8 @@ describe('FreezeService', () => {
           issuerKeypair,
           targetKeypair.publicKey(),
           'ORGUSD',
-          'freeze',
-        ),
+          'freeze'
+        )
       ).rejects.toThrow('tx_failed');
 
       expect(pool.query).not.toHaveBeenCalled();
@@ -162,11 +166,7 @@ describe('FreezeService', () => {
 
   describe('toggleGlobalFreeze', () => {
     it('returns an empty array and skips DB write when no holders exist', async () => {
-      const results = await FreezeService.toggleGlobalFreeze(
-        issuerKeypair,
-        'ORGUSD',
-        'freeze',
-      );
+      const results = await FreezeService.toggleGlobalFreeze(issuerKeypair, 'ORGUSD', 'freeze');
 
       expect(results).toHaveLength(0);
       expect(pool.query).not.toHaveBeenCalled();
@@ -179,11 +179,7 @@ describe('FreezeService', () => {
 
       // Page with 2 real holders + the issuer (should be skipped)
       mockServer = makeMockServer({
-        records: [
-          { account_id: holder1 },
-          { account_id: holder2 },
-          { account_id: assetIssuer },
-        ],
+        records: [{ account_id: holder1 }, { account_id: holder2 }, { account_id: assetIssuer }],
       });
       (StellarService.getServer as jest.Mock).mockReturnValue(mockServer);
 
@@ -191,7 +187,7 @@ describe('FreezeService', () => {
         issuerKeypair,
         'ORGUSD',
         'freeze',
-        'Emergency',
+        'Emergency'
       );
 
       // Only non-issuer holders are returned
@@ -203,7 +199,7 @@ describe('FreezeService', () => {
       expect(pool.query).toHaveBeenCalledTimes(1);
       expect(pool.query).toHaveBeenCalledWith(
         expect.stringContaining('INSERT INTO account_freeze_logs'),
-        expect.arrayContaining([holder1, holder2, 'ORGUSD', 'freeze', 'global']),
+        expect.arrayContaining([holder1, holder2, 'ORGUSD', 'freeze', 'global'])
       );
     });
 
@@ -212,11 +208,7 @@ describe('FreezeService', () => {
       mockServer = makeMockServer({ records: [{ account_id: holder }] });
       (StellarService.getServer as jest.Mock).mockReturnValue(mockServer);
 
-      const results = await FreezeService.toggleGlobalFreeze(
-        issuerKeypair,
-        'ORGUSD',
-        'unfreeze',
-      );
+      const results = await FreezeService.toggleGlobalFreeze(issuerKeypair, 'ORGUSD', 'unfreeze');
 
       expect(results[0]).toMatchObject({
         txHash: 'mock-tx-hash',
@@ -250,7 +242,7 @@ describe('FreezeService', () => {
       const frozen = await FreezeService.isFrozen(
         targetKeypair.publicKey(),
         'ORGUSD',
-        assetIssuerKey,
+        assetIssuerKey
       );
       expect(frozen).toBe(true);
     });
@@ -270,7 +262,7 @@ describe('FreezeService', () => {
       const frozen = await FreezeService.isFrozen(
         targetKeypair.publicKey(),
         'ORGUSD',
-        assetIssuerKey,
+        assetIssuerKey
       );
       expect(frozen).toBe(false);
     });
@@ -281,7 +273,7 @@ describe('FreezeService', () => {
       const frozen = await FreezeService.isFrozen(
         targetKeypair.publicKey(),
         'ORGUSD',
-        assetIssuerKey,
+        assetIssuerKey
       );
       expect(frozen).toBe(false);
     });
@@ -292,7 +284,7 @@ describe('FreezeService', () => {
       const frozen = await FreezeService.isFrozen(
         targetKeypair.publicKey(),
         'ORGUSD',
-        assetIssuerKey,
+        assetIssuerKey
       );
       expect(frozen).toBe(false);
     });
@@ -301,7 +293,7 @@ describe('FreezeService', () => {
       mockServer.loadAccount.mockRejectedValue(new Error('Network timeout'));
 
       await expect(
-        FreezeService.isFrozen(targetKeypair.publicKey(), 'ORGUSD', assetIssuerKey),
+        FreezeService.isFrozen(targetKeypair.publicKey(), 'ORGUSD', assetIssuerKey)
       ).rejects.toThrow('Network timeout');
     });
   });
@@ -313,7 +305,7 @@ describe('FreezeService', () => {
   describe('listLogs', () => {
     beforeEach(() => {
       (pool.query as jest.Mock)
-        .mockResolvedValueOnce({ rows: [{ count: '5' }] })   // COUNT query
+        .mockResolvedValueOnce({ rows: [{ count: '5' }] }) // COUNT query
         .mockResolvedValueOnce({ rows: [{ id: 1 }, { id: 2 }] }); // data query
     });
 
@@ -327,7 +319,8 @@ describe('FreezeService', () => {
     });
 
     it('caps limit at 100', async () => {
-      (pool.query as jest.Mock).mockReset()
+      (pool.query as jest.Mock)
+        .mockReset()
         .mockResolvedValueOnce({ rows: [{ count: '0' }] })
         .mockResolvedValueOnce({ rows: [] });
 
@@ -339,12 +332,17 @@ describe('FreezeService', () => {
     });
 
     it('includes optional filters in the WHERE clause', async () => {
-      (pool.query as jest.Mock).mockReset()
+      (pool.query as jest.Mock)
+        .mockReset()
         .mockResolvedValueOnce({ rows: [{ count: '0' }] })
         .mockResolvedValueOnce({ rows: [] });
 
       const testTarget = targetKeypair.publicKey();
-      await FreezeService.listLogs({ targetAccount: testTarget, action: 'freeze', assetCode: 'ORGUSD' });
+      await FreezeService.listLogs({
+        targetAccount: testTarget,
+        action: 'freeze',
+        assetCode: 'ORGUSD',
+      });
 
       const countQuery = (pool.query as jest.Mock).mock.calls[0];
       expect(countQuery[0]).toContain('WHERE');
@@ -373,7 +371,7 @@ describe('FreezeService', () => {
       const result = await FreezeService.getLatestLog(
         targetKeypair.publicKey(),
         'ORGUSD',
-        issuerKeypair.publicKey(),
+        issuerKeypair.publicKey()
       );
       expect(result).toEqual(mockRow);
     });
@@ -384,7 +382,7 @@ describe('FreezeService', () => {
       const result = await FreezeService.getLatestLog(
         targetKeypair.publicKey(),
         'ORGUSD',
-        issuerKeypair.publicKey(),
+        issuerKeypair.publicKey()
       );
       expect(result).toBeNull();
     });
@@ -397,10 +395,11 @@ describe('FreezeService', () => {
 
       await FreezeService.getLatestLog(target, 'ORGUSD', issuer);
 
-      expect(pool.query).toHaveBeenCalledWith(
-        expect.stringContaining('ORDER BY created_at DESC'),
-        [target, 'ORGUSD', issuer],
-      );
+      expect(pool.query).toHaveBeenCalledWith(expect.stringContaining('ORDER BY created_at DESC'), [
+        target,
+        'ORGUSD',
+        issuer,
+      ]);
     });
   });
 });

@@ -29,9 +29,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/payroll"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-(--accent) bg-white/5'
-            : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-(--accent) bg-white/5'
+              : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
         onClick={() => setMobileOpen(false)}
@@ -45,9 +46,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/employee"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-(--accent) bg-white/5'
-            : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-(--accent) bg-white/5'
+              : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
         onClick={() => setMobileOpen(false)}
@@ -61,9 +63,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/portal"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-(--accent) bg-white/5'
-            : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-(--accent) bg-white/5'
+              : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -76,9 +79,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/reports"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-(--accent) bg-white/5'
-            : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-(--accent) bg-white/5'
+              : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
         onClick={() => setMobileOpen(false)}
@@ -92,9 +96,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/cross-asset-payment"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-(--accent) bg-white/5'
-            : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-(--accent) bg-white/5'
+              : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
         onClick={() => setMobileOpen(false)}
@@ -108,9 +113,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/transactions"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-(--accent) bg-white/5'
-            : 'text-(--muted) hover:bg-white/10 hover:text-white'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-(--accent) bg-white/5'
+              : 'text-(--muted) hover:bg-white/10 hover:text-white'
           }`
         }
       >
@@ -124,9 +130,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/admin"
         className={({ isActive }) =>
-          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${isActive
-            ? 'text-red-500 bg-red-500/10'
-            : 'text-red-400 hover:bg-red-500/20 hover:text-red-500'
+          `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition ${
+            isActive
+              ? 'text-red-500 bg-red-500/10'
+              : 'text-red-400 hover:bg-red-500/20 hover:text-red-500'
           }`
         }
       >
@@ -137,9 +144,10 @@ const AppNav: React.FC = () => {
       <NavLink
         to="/debug"
         className={({ isActive }) =>
-          `flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-mono tracking-wide border transition ${isActive
-            ? 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)]'
-            : 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)] hover:bg-[rgba(124,111,247,0.12)]'
+          `flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-mono tracking-wide border transition ${
+            isActive
+              ? 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)]'
+              : 'text-(--accent2) bg-[rgba(124,111,247,0.06)] border-[rgba(124,111,247,0.25)] hover:bg-[rgba(124,111,247,0.12)]'
           }`
         }
         onClick={() => setMobileOpen(false)}

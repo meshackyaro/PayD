@@ -42,9 +42,9 @@ app.use('/freeze', freezeRoutes);
 const testIssuer = Keypair.random();
 const testTarget = Keypair.random();
 
-const VALID_ISSUER_SECRET = testIssuer.secret();   // 56-char S...
+const VALID_ISSUER_SECRET = testIssuer.secret(); // 56-char S...
 const VALID_ISSUER_PUBLIC = testIssuer.publicKey(); // 56-char G...
-const VALID_TARGET = testTarget.publicKey();        // 56-char G...
+const VALID_TARGET = testTarget.publicKey(); // 56-char G...
 const VALID_ASSET_CODE = 'ORGUSD';
 
 const mockAccountResult: FreezeResult = {
@@ -80,13 +80,11 @@ describe('FreezeController', () => {
     it('returns 200 and the freeze result for a valid request body', async () => {
       (FreezeService.toggleAccountFreeze as jest.Mock).mockResolvedValue(mockAccountResult);
 
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -102,39 +100,35 @@ describe('FreezeController', () => {
         VALID_TARGET,
         VALID_ASSET_CODE,
         'freeze',
-        undefined, // reason omitted
+        undefined // reason omitted
       );
     });
 
     it('forwards the optional reason field to the service', async () => {
       (FreezeService.toggleAccountFreeze as jest.Mock).mockResolvedValue(mockAccountResult);
 
-      await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: VALID_ASSET_CODE,
-          reason: 'Fraud investigation',
-        });
+      await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: VALID_ASSET_CODE,
+        reason: 'Fraud investigation',
+      });
 
       expect(FreezeService.toggleAccountFreeze).toHaveBeenCalledWith(
         expect.anything(),
         VALID_TARGET,
         VALID_ASSET_CODE,
         'freeze',
-        'Fraud investigation',
+        'Fraud investigation'
       );
     });
 
     it('returns 400 when targetAccount is not exactly 56 characters', async () => {
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: 'too-short',
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: 'too-short',
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Validation Error');
@@ -142,38 +136,32 @@ describe('FreezeController', () => {
     });
 
     it('returns 400 when assetCode contains lowercase letters', async () => {
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: 'orgusd',
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: 'orgusd',
+      });
 
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Validation Error');
     });
 
     it('returns 400 when assetCode exceeds 12 characters', async () => {
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: 'TOOLONGASSET123',
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: 'TOOLONGASSET123',
+      });
 
       expect(res.status).toBe(400);
     });
 
     it('returns 400 when issuerSecret is shorter than 56 characters', async () => {
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: 'short',
-          targetAccount: VALID_TARGET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: 'short',
+        targetAccount: VALID_TARGET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(400);
     });
@@ -195,13 +183,11 @@ describe('FreezeController', () => {
         },
       });
 
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(502);
       expect(res.body.error).toBe('Stellar network error');
@@ -210,16 +196,14 @@ describe('FreezeController', () => {
 
     it('returns 500 for unexpected internal errors', async () => {
       (FreezeService.toggleAccountFreeze as jest.Mock).mockRejectedValue(
-        new Error('DB connection lost'),
+        new Error('DB connection lost')
       );
 
-      const res = await request(app)
-        .post('/freeze/account/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/account/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(500);
       expect(res.body.error).toBe('Internal Server Error');
@@ -237,13 +221,11 @@ describe('FreezeController', () => {
         action: 'unfreeze',
       });
 
-      const res = await request(app)
-        .post('/freeze/account/unfreeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          targetAccount: VALID_TARGET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/account/unfreeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        targetAccount: VALID_TARGET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.data.action).toBe('unfreeze');
@@ -252,7 +234,7 @@ describe('FreezeController', () => {
         VALID_TARGET,
         VALID_ASSET_CODE,
         'unfreeze',
-        undefined,
+        undefined
       );
     });
   });
@@ -269,12 +251,10 @@ describe('FreezeController', () => {
         { ...mockAccountResult, targetAccount: secondTarget },
       ]);
 
-      const res = await request(app)
-        .post('/freeze/global/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/global/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -285,12 +265,10 @@ describe('FreezeController', () => {
     it('returns 200 with affectedCount=0 when no holders exist', async () => {
       (FreezeService.toggleGlobalFreeze as jest.Mock).mockResolvedValue([]);
 
-      const res = await request(app)
-        .post('/freeze/global/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/global/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.data.affectedCount).toBe(0);
@@ -308,13 +286,11 @@ describe('FreezeController', () => {
     it('does not require targetAccount in the body', async () => {
       (FreezeService.toggleGlobalFreeze as jest.Mock).mockResolvedValue([]);
 
-      const res = await request(app)
-        .post('/freeze/global/freeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          assetCode: VALID_ASSET_CODE,
-          // no targetAccount
-        });
+      const res = await request(app).post('/freeze/global/freeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        assetCode: VALID_ASSET_CODE,
+        // no targetAccount
+      });
 
       expect(res.status).toBe(200);
     });
@@ -328,19 +304,17 @@ describe('FreezeController', () => {
     it('returns 200 for a valid global unfreeze request', async () => {
       (FreezeService.toggleGlobalFreeze as jest.Mock).mockResolvedValue([mockAccountResult]);
 
-      const res = await request(app)
-        .post('/freeze/global/unfreeze')
-        .send({
-          issuerSecret: VALID_ISSUER_SECRET,
-          assetCode: VALID_ASSET_CODE,
-        });
+      const res = await request(app).post('/freeze/global/unfreeze').send({
+        issuerSecret: VALID_ISSUER_SECRET,
+        assetCode: VALID_ASSET_CODE,
+      });
 
       expect(res.status).toBe(200);
       expect(FreezeService.toggleGlobalFreeze).toHaveBeenCalledWith(
         expect.anything(),
         VALID_ASSET_CODE,
         'unfreeze',
-        undefined,
+        undefined
       );
     });
   });
@@ -416,9 +390,7 @@ describe('FreezeController', () => {
     it('returns 200 with paginated log entries', async () => {
       (FreezeService.listLogs as jest.Mock).mockResolvedValue(mockPage);
 
-      const res = await request(app)
-        .get('/freeze/logs')
-        .query({ page: 1, limit: 20 });
+      const res = await request(app).get('/freeze/logs').query({ page: 1, limit: 20 });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -429,15 +401,13 @@ describe('FreezeController', () => {
     it('passes filter query params through to FreezeService.listLogs', async () => {
       (FreezeService.listLogs as jest.Mock).mockResolvedValue({ ...mockPage, data: [] });
 
-      await request(app)
-        .get('/freeze/logs')
-        .query({
-          action: 'freeze',
-          assetCode: VALID_ASSET_CODE,
-          targetAccount: VALID_TARGET,
-          page: 2,
-          limit: 10,
-        });
+      await request(app).get('/freeze/logs').query({
+        action: 'freeze',
+        assetCode: VALID_ASSET_CODE,
+        targetAccount: VALID_TARGET,
+        page: 2,
+        limit: 10,
+      });
 
       expect(FreezeService.listLogs).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -446,23 +416,19 @@ describe('FreezeController', () => {
           targetAccount: VALID_TARGET,
           page: 2,
           limit: 10,
-        }),
+        })
       );
     });
 
     it('returns 400 when page is not a valid integer', async () => {
-      const res = await request(app)
-        .get('/freeze/logs')
-        .query({ page: 'not-a-number' });
+      const res = await request(app).get('/freeze/logs').query({ page: 'not-a-number' });
 
       expect(res.status).toBe(400);
       expect(FreezeService.listLogs).not.toHaveBeenCalled();
     });
 
     it('returns 400 when action is an invalid enum value', async () => {
-      const res = await request(app)
-        .get('/freeze/logs')
-        .query({ action: 'delete' }); // not "freeze" or "unfreeze"
+      const res = await request(app).get('/freeze/logs').query({ action: 'delete' }); // not "freeze" or "unfreeze"
 
       expect(res.status).toBe(400);
     });

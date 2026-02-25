@@ -1,21 +1,16 @@
-import {
-  Asset,
-  Keypair,
-  Operation,
-  TransactionBuilder,
-} from "@stellar/stellar-sdk";
-import { StellarService } from "./stellarService";
-import { pool } from "../config/database";
+import { Asset, Keypair, Operation, TransactionBuilder } from '@stellar/stellar-sdk';
+import { StellarService } from './stellarService';
+import { pool } from '../config/database';
 
 // ---------------------------------------------------------------------------
 // Public types
 // ---------------------------------------------------------------------------
 
 /** The two supported freeze actions. */
-export type FreezeAction = "freeze" | "unfreeze";
+export type FreezeAction = 'freeze' | 'unfreeze';
 
 /** Scope of the freeze: a single account or the whole asset class. */
-export type FreezeScope = "account" | "global";
+export type FreezeScope = 'account' | 'global';
 
 /** Single freeze-log row from the DB. */
 export interface FreezeLogRecord {
@@ -116,7 +111,7 @@ async function writeBulkAuditLog(
       (_, i) =>
         `($${i * COLS + 1},$${i * COLS + 2},$${i * COLS + 3},$${i * COLS + 4},$${i * COLS + 5},$${i * COLS + 6},$${i * COLS + 7},$${i * COLS + 8})`
     )
-    .join(", ");
+    .join(', ');
 
   const values = rows.flatMap((r) => [
     r.targetAccount,
@@ -157,7 +152,7 @@ function buildSetTrustLineFlagsOp(
     asset,
     flags: {
       // freeze → revoke authorization; unfreeze → restore it
-      authorized: action === "unfreeze",
+      authorized: action === 'unfreeze',
     },
   });
 }
@@ -202,7 +197,7 @@ export class FreezeService {
     const issuerAccount = await server.loadAccount(assetIssuer);
 
     const transaction = new TransactionBuilder(issuerAccount, {
-      fee: "500", // slightly higher fee for flag ops to reduce rejection risk
+      fee: '500', // slightly higher fee for flag ops to reduce rejection risk
       networkPassphrase,
     })
       .addOperation(buildSetTrustLineFlagsOp(targetAccount, asset, action))
@@ -218,7 +213,7 @@ export class FreezeService {
       assetCode,
       assetIssuer,
       action,
-      scope: "account",
+      scope: 'account',
       txHash: result.hash,
       initiatedBy: assetIssuer,
       reason,
@@ -227,7 +222,7 @@ export class FreezeService {
     return {
       txHash: result.hash,
       action,
-      scope: "account",
+      scope: 'account',
       targetAccount,
       assetCode,
       assetIssuer,
@@ -277,7 +272,7 @@ export class FreezeService {
         const issuerAccount = await server.loadAccount(assetIssuer);
 
         const builder = new TransactionBuilder(issuerAccount, {
-          fee: "500",
+          fee: '500',
           networkPassphrase,
         }).setTimeout(60);
 
@@ -285,9 +280,7 @@ export class FreezeService {
           // Skip the issuer account itself — it does not hold its own asset via trustline
           if (holder.account_id === assetIssuer) continue;
 
-          builder.addOperation(
-            buildSetTrustLineFlagsOp(holder.account_id, asset, action)
-          );
+          builder.addOperation(buildSetTrustLineFlagsOp(holder.account_id, asset, action));
         }
 
         const transaction = builder.build();
@@ -296,9 +289,7 @@ export class FreezeService {
         const txResult = await server.submitTransaction(transaction);
 
         // Collect valid holders (skip issuer — it doesn't hold its own trustline)
-        const validHolders = batch.filter(
-          (h) => h.account_id !== assetIssuer
-        );
+        const validHolders = batch.filter((h) => h.account_id !== assetIssuer);
 
         // Single bulk INSERT instead of N round-trips
         await writeBulkAuditLog(
@@ -307,7 +298,7 @@ export class FreezeService {
             assetCode,
             assetIssuer,
             action,
-            scope: "global" as FreezeScope,
+            scope: 'global' as FreezeScope,
             txHash: txResult.hash,
             initiatedBy: assetIssuer,
             reason,
@@ -318,7 +309,7 @@ export class FreezeService {
           results.push({
             txHash: txResult.hash,
             action,
-            scope: "global",
+            scope: 'global',
             targetAccount: holder.account_id,
             assetCode,
             assetIssuer,
@@ -357,9 +348,7 @@ export class FreezeService {
 
       const trustline = account.balances.find(
         (b: any) =>
-          b.asset_type !== "native" &&
-          b.asset_code === assetCode &&
-          b.asset_issuer === assetIssuer
+          b.asset_type !== 'native' && b.asset_code === assetCode && b.asset_issuer === assetIssuer
       ) as any | undefined;
 
       if (!trustline) return false; // no trustline ↔ not relevant
@@ -409,7 +398,7 @@ export class FreezeService {
       values.push(options.assetCode);
     }
 
-    const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+    const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
     // COUNT query (same params, no limit/offset)
     const countResult = await pool.query(

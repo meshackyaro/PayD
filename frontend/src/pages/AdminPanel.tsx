@@ -468,10 +468,11 @@ export default function AdminPanel() {
                     Status
                   </span>
                   <span
-                    className={`px-3 py-1 rounded text-xs font-black uppercase tracking-widest border ${statusResult.isFrozen
+                    className={`px-3 py-1 rounded text-xs font-black uppercase tracking-widest border ${
+                      statusResult.isFrozen
                         ? 'bg-red-500/20 text-red-500 border-red-500/30'
                         : 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30'
-                      }`}
+                    }`}
                   >
                     {statusResult.isFrozen ? 'Frozen' : 'Active'}
                   </span>
@@ -567,10 +568,11 @@ export default function AdminPanel() {
                         <td className="p-3 text-xs font-bold">{log.asset_code}</td>
                         <td className="p-3">
                           <span
-                            className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-widest ${log.action === 'freeze'
+                            className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-widest ${
+                              log.action === 'freeze'
                                 ? 'bg-red-500/20 text-red-500'
                                 : 'bg-emerald-500/20 text-emerald-500'
-                              }`}
+                            }`}
                           >
                             {log.action}
                           </span>
