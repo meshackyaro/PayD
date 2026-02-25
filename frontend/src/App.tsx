@@ -12,7 +12,6 @@ import CustomReportBuilder from './pages/CustomReportBuilder';
 import CrossAssetPayment from './pages/CrossAssetPayment';
 import TransactionHistory from './pages/TransactionHistory';
 
-import AdminPanel from './pages/AdminPanel';
 
 import EmployeePortal from './pages/EmployeePortal';
 import Login from "./pages/Login";
