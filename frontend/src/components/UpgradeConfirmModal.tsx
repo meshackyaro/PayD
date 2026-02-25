@@ -313,8 +313,8 @@ export default function UpgradeConfirmModal({
       });
 
       // Poll migration progress every 3 seconds
-      pollRef.current = setInterval(async () => {
-        try {
+      pollRef.current = setInterval(() => {
+        void (async () => { try {
           const log = await fetchUpgradeStatus(upgradeLogId);
 
           setModal({
@@ -338,7 +338,7 @@ export default function UpgradeConfirmModal({
           }
         } catch {
           // Network blip — keep polling silently
-        }
+        } })();
       }, 3_000);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Execution failed';
@@ -534,8 +534,8 @@ export default function UpgradeConfirmModal({
               {/* Warnings */}
               {modal.simulation.warnings.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  {modal.simulation.warnings.map((w, i) => (
-                    <div key={i} className="flex items-start gap-2 p-3 bg-yellow-500/5 border border-yellow-500/30 rounded-xl text-xs text-yellow-400">
+                  {modal.simulation.warnings.map((w) => (
+                    <div key={w} className="flex items-start gap-2 p-3 bg-yellow-500/5 border border-yellow-500/30 rounded-xl text-xs text-yellow-400">
                       <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                       {w}
                     </div>
