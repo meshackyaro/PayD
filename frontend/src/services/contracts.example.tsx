@@ -1,6 +1,6 @@
 /**
  * Contract Service Usage Examples
- * 
+ *
  * This file demonstrates how to use the contract service to fetch
  * contract addresses dynamically instead of hardcoding them.
  */
@@ -103,7 +103,10 @@ export function DynamicContractSelector() {
 
   return (
     <div>
-      <select value={contractType} onChange={(e) => setContractType(e.target.value as ContractType)}>
+      <select
+        value={contractType}
+        onChange={(e) => setContractType(e.target.value as ContractType)}
+      >
         <option value="bulk_payment">Bulk Payment</option>
         <option value="vesting_escrow">Vesting Escrow</option>
         <option value="revenue_split">Revenue Split</option>
